@@ -3,11 +3,12 @@
 import math
 from stack import stack
 from lexer import lexer, operand_codes
+import maths
 
 stack_ = stack()
 lex = lexer()
 
-example = "?variable"
+example = "3 2 POW"
 example_ = example.split()
 
 variable_map_ = {
@@ -24,6 +25,7 @@ for chunk in example_:
   elif(operand_code == operand_codes.ASSIGN.value):
     if(lex.is_keyword(chunk)):
       print("cannot use {} as a variable name!".format(chunk))
+      stack_.clear_contents()
       break
     else:
       print("assigning {} with value of {}".format(chunk[1:], stack_.peek()))
@@ -39,4 +41,21 @@ for chunk in example_:
         print("cannot retrieve value of {}, it is not in the table".format(variable_))
   else:
     # implement this into long math function
-    print("got something: {}".format(chunk))
+    # math_function(container: list, operand_code: int)
+# if len at least 1 or ge than two then the add, sub, etc operands
+    try:
+      multi_argument_code = lex.operand_map[chunk]
+      contents_ = stack_.data_.copy()
+      stack_.clear_contents()
+      stack_.push(maths.math_function(contents_, multi_argument_code))
+    except KeyError:
+      value_ = [stack_.pop()]
+      if(operand_codes.POW.value == lex.tokenize(chunk)):
+        value_.append(stack_.pop())
+      stack_.clear_contents()
+      try:
+        stack_.push(float(maths.math_function(value_, lex.tokenize(chunk))))
+      except Exception as error:
+        print("oops, got a math error ey there bud!: {}".format(error))
+
+print(stack_.peek())

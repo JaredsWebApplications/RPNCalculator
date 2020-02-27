@@ -32,14 +32,6 @@ class operand_codes(Enum, start=0):
     POP
     PEEK
 
-operand_map = {
-    '+': operand_codes.ADD.value,
-    '-': operand_codes.SUB.value,
-    '/': operand_codes.DIV.value,
-    '%': operand_codes.MOD.value,
-    '*': operand_codes.MUL.value,
-    '\n': operand_codes.LINEFEED.value
-}
 
 # G = graviational constant
 # g = gravity on Earth
@@ -58,6 +50,14 @@ class lexer():
         self.operands_names_ = [operand.name for operand in operand_codes]
         self.constant_names_ = [constant.name for constant in constants]
         self.keywords = self.operands_names_ + self.constant_names_
+        self.operand_map = {
+            '+': operand_codes.ADD.value,
+            '-': operand_codes.SUB.value,
+            '/': operand_codes.DIV.value,
+            '%': operand_codes.MOD.value,
+            '*': operand_codes.MUL.value,
+            '\n': operand_codes.LINEFEED.value
+        }
 
     def is_keyword(self, pattern: str) -> bool:
         """
@@ -81,7 +81,7 @@ class lexer():
         if(chunk[0] == '?'):
           return operand_codes.RETRIEVE.value
         try:
-            return operand_map[chunk]
+            return self.operand_map[chunk]
         except KeyError:
             return operand_codes.GARBAGE.value
 

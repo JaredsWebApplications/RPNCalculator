@@ -29,3 +29,6 @@ class stack():
           print("cannot push value to the stack, it is full!")
           return
         self.data_.append(value)
+    def clear_contents(self) -> None:
+        self.data_.clear()
+        self.size_ = 0
