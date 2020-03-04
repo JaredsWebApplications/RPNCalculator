@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.8
 
-from lexer import operand_codes
+from lexer import operand_codes, lexer
 import math
 import stack
 import functools
@@ -19,27 +19,33 @@ function_map_ = {
     operand_codes.EXP.value: lambda a: math.exp(a),
     operand_codes.LOG.value: lambda a: math.log10(a),
     operand_codes.LN.value: lambda a: math.log(a),
-    operand_codes.POW.value: lambda a, b: math.pow(a, b)
+    operand_codes.POW.value: lambda a, b: math.pow(a, b),
+    operand_codes.ADD.value: lambda a, b: a + b,
+    operand_codes.SUB.value: lambda a, b: a - b,
+    operand_codes.MUL.value: lambda a, b: a * b,
+    operand_codes.DIV.value: lambda a, b: a / b,
+    operand_codes.MOD.value: lambda a, b: a % b
+# operand_codes.LIST_ADD.value: lambda container: functools.reduce(operator.add, container)
+    # operand_codes.ADD.value: lambda container: functools.reduce(operator.add, container),
+    # operand_codes.SUB.value: lambda container: functools.reduce(operator.sub, container),
+    # operand_codes.MUL.value: lambda container: functools.reduce(operator.mul, container),
+    # operand_codes.DIV.value: lambda container: functools.reduce(operator.truediv, container),
+    # operand_codes.MOD.value: lambda container: functools.reduce(operator.mod, container)
 }
+
+lexi = lexer()
+simple_operands_ = list(lexi.operand_map.values())
+
 def math_function(container: list, operand_code: int) -> float:
-    if(len(container) == 1):
-      try:
-          return function_map_[operand_code](*container)
-      except KeyError:
-          print("unsupported operand code: {}".format(operand_code))
-    elif(len(container) == 2):
-      try:
-          return function_map_[operand_code](container[1], container[0])
-      except KeyError:
-          print("unsupported operand code: {}".format(operand_code))
-    elif(len(container) >= 2):
-      if(operand_code == operand_codes.ADD.value):
-        return functools.reduce(operator.add, container)
-      elif(operand_code == operand_codes.SUB.value):
-        return functools.reduce(operator.sub, container)
-      elif(operand_code == operand_codes.MUL.value):
-        return functools.reduce(operator.mul, container)
-      elif(operand_code == operand_codes.DIV.value):
-        return functools.reduce(operator.truediv, container)
-      elif(operand_code == operand_codes.MOD.value):
-        return functools.reduce(operator.mod, container)
+    if(container is None): return
+
+    # if it is any of the trig functions
+    try:
+      if(len(container) == 1):
+        return function_map_[operand_code](*container)
+      elif(len(container) == 2 or operand_code == operand_codes.POW.value and operand_code in simple_operands_):
+        return function_map_[operand_code](container[1], container[0])
+      else:
+        return function_map_[operand_code](container)
+    except KeyError:
+        print("unsupported operand code: {}".format(operand_code))

@@ -1,34 +1,28 @@
-class stack():
-    def __init__(self):
-        self.data_ = []
-        self.size_ = 0
-        self.max_size_ = 100
+class stack:
+  def __init__(self):
+    self.items = []
 
-    def is_empty(self) -> bool:
-        return (self.size_ == 0)
+  def isEmpty(self):
+    return self.items == []
 
-    def size_of(self) -> int:
-        return len(self.data_)
+  def push(self, item):
+    self.items.append(item)
 
-    def pop(self) -> float:
-        if(self.is_empty()):
-          print("cannot pop value, stack is empty!")
-          return None
-        self.size_-=1
-        return self.data_[self.size_]
+  def pop(self):
+    return self.items.pop()
 
-    def peek(self) -> float:
-        if(self.is_empty()):
-          print("cannot peek value, stack is empty!")
-          return None
-        return self.data_[self.size_-1]
+  def pop_n(self, n):
+    return [self.items.pop() for _ in range(0, n)]
+    # return self.items.pop()
 
-    def push(self, value: float) -> None:
-        self.size_+=1
-        if(self.size_ >= self.max_size_):
-          print("cannot push value to the stack, it is full!")
-          return
-        self.data_.append(value)
-    def clear_contents(self) -> None:
-        self.data_.clear()
-        self.size_ = 0
+  def peek(self):
+    return self.items[len(self.items)-1]
+
+  def size(self):
+    return len(self.items)
+  
+  def clear_contents(self):
+    self.items.clear()
+
+  def is_empty(self):
+    return (self.size == 0)
