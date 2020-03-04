@@ -7,10 +7,13 @@ import maths
 from signal import signal, SIGINT
 from sys import exit
 
+
+"""
+Variables available for all processes in program
+"""
+
 stack_ = stack()
 lex = lexer()
-
-example = "3 2 POW"
 
 variable_map_ = {
     "variable": 10.0
@@ -18,6 +21,44 @@ variable_map_ = {
 
 def sigint_handler(signal_received, frame):
     exit(0)
+
+def assign_value_(string: str):
+  variable_ = string[1:]
+  if(variable_.strip() in lex.keywords):
+    print("cannot use {} as a variable name!".format(variable_))
+    stack_.clear_contents()
+  else:
+    print("assigning {} with value of {}".format(string[1:], stack_.peek()))
+    variable_map_[variable_] = stack_.peek()
+
+def retrieve_value_(string: str):
+  variable_ = string[1:]
+  try:
+      value_retrieved_ = variable_map_[variable_]
+      stack_.push(value_retrieved_)
+  except KeyError:
+      print("cannot retrieve value of {}, it is not in the table".format(variable_))
+
+def math_operation_(string: str):
+  try:
+    # this is only for list operations
+    multi_argument_code = lex.operand_map[string]
+    contents_ = stack_.pop_n(2)
+    try:
+      stack_.push(maths.math_function(contents_, multi_argument_code))
+    except TypeError as error:
+      print("error value of: {}".format(error))
+      print("invalid syntax: {}".format(string))
+  except KeyError:
+    value_ = [stack_.pop()]
+    if(operand_codes.POW.value == lex.tokenize(string)):
+      value_.append(stack_.pop())
+    stack_.clear_contents()
+    try:
+      stack_.push(float(maths.math_function(value_, lex.tokenize(string))))
+    except Exception as error:
+      print("oops, got a math error ey there bud!: {}".format(error))
+
 
 def rpn_calculator(expression: str) -> None:
   for chunk in expression.split():
@@ -29,42 +70,13 @@ def rpn_calculator(expression: str) -> None:
       stack_.push(float(chunk))
 
     elif(operand_code == operand_codes.ASSIGN.value):
-      variable_ = chunk[1:]
-      if(variable_.strip() in lex.keywords):
-        print("cannot use {} as a variable name!".format(variable_))
-        stack_.clear_contents()
-        break
-      else:
-        print("assigning {} with value of {}".format(chunk[1:], stack_.peek()))
-        variable_map_[variable_] = stack_.peek()
+      assign_value_(chunk)
 
     elif(operand_code == operand_codes.RETRIEVE.value):
-      variable_ = chunk[1:]
-      try:
-          value_retrieved_ = variable_map_[variable_]
-          # print("retrieved varaible {} with value of {}".format(variable_, value_retrieved_))
-          stack_.push(value_retrieved_)
-      except KeyError:
-          print("cannot retrieve value of {}, it is not in the table".format(variable_))
+      retrieve_value_(chunk)
+
     else:
-      try:
-        # this is only for list operations
-        multi_argument_code = lex.operand_map[chunk]
-        contents_ = stack_.pop_n(2)
-        try:
-          stack_.push(maths.math_function(contents_, multi_argument_code))
-        except TypeError as error:
-          print("error value of: {}".format(error))
-          print("invalid syntax: {}".format(chunk))
-      except KeyError:
-        value_ = [stack_.pop()]
-        if(operand_codes.POW.value == lex.tokenize(chunk)):
-          value_.append(stack_.pop())
-        stack_.clear_contents()
-        try:
-          stack_.push(float(maths.math_function(value_, lex.tokenize(chunk))))
-        except Exception as error:
-          print("oops, got a math error ey there bud!: {}".format(error))
+      math_operation_(chunk)
 
 signal(SIGINT, sigint_handler)
 
@@ -72,6 +84,6 @@ while(True):
   exp = input(">>> ")
   rpn_calculator(exp)
   if(not stack_.is_empty()):
-    try: print("\t{}".format(stack_.peek()))
-    except IndexError: pass
+    try: print("\t{0:.5f}".format(stack_.peek()))
+    except IndexError: print("\tstack is empty")
   stack_.clear_contents()
