@@ -24,6 +24,8 @@ class operand_codes(Enum, start=0):
     ATANH
     LOG
     LN
+    FLOOR
+    SQRT
     GARBAGE
     LINEFEED
     NUMBER
@@ -31,17 +33,16 @@ class operand_codes(Enum, start=0):
     RETRIEVE
     POP
     PEEK
+    CONSTANT
 
 
 # G = graviational constant
 # g = gravity on Earth
-# PLANCK = Planck's constant
 
 class constants(Enum, start=0):
     _PI
     _G
     _g
-    _PLANCK
     _e
 
 
@@ -66,6 +67,14 @@ class lexer():
         """
         return pattern in self.keywords
 
+    def is_number(self, element: str) -> bool:
+        integer_check_ = element.isdigit()
+        try: 
+            float(element)
+            float_check_ = True
+        except ValueError: float_check_ = False
+        return (integer_check_ or float_check_)
+
     def tokenize(self, chunk: str) -> int:
         """
         Iterate over the token names.
@@ -74,12 +83,14 @@ class lexer():
         """
         if(chunk in self.operands_names_):
           return getattr(operand_codes, chunk).value
-        if(chunk.isdigit()):
+        if(self.is_number(chunk)):
           return operand_codes.NUMBER.value
         if(chunk[0] == '='):
           return operand_codes.ASSIGN.value
         if(chunk[0] == '?'):
           return operand_codes.RETRIEVE.value
+        if(chunk[0] == '_'):
+          return operand_codes.CONSTANT.value
         try:
             return self.operand_map[chunk]
         except KeyError:

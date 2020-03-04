@@ -27,6 +27,11 @@ The following mathematical functions are supported:
 - ASIN (arcsin)
 - ACOS (arccos)
 - ATAN (arctan)
+- SINH (hyperbolic sine)
+- COSH (hyperbolic cosine)
+- TANH (hyperbolic tangent)
+- LOG (base 10 logarithm)
+- LN (natural log)
 - POW
 - EXP
 - ADD ('+')

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.8
 
-from lexer import operand_codes, lexer
+from lexer import operand_codes, lexer, constants
 import math
 import stack
 import functools
@@ -19,6 +19,8 @@ function_map_ = {
     operand_codes.EXP.value: lambda a: math.exp(a),
     operand_codes.LOG.value: lambda a: math.log10(a),
     operand_codes.LN.value: lambda a: math.log(a),
+    operand_codes.FLOOR.value: lambda a: math.floor(a),
+    operand_codes.SQRT.value: lambda a: math.sqrt(a),
     operand_codes.POW.value: lambda a, b: math.pow(a, b),
     operand_codes.ADD.value: lambda a, b: a + b,
     operand_codes.SUB.value: lambda a, b: a - b,
@@ -31,6 +33,13 @@ function_map_ = {
     # operand_codes.MUL.value: lambda container: functools.reduce(operator.mul, container),
     # operand_codes.DIV.value: lambda container: functools.reduce(operator.truediv, container),
     # operand_codes.MOD.value: lambda container: functools.reduce(operator.mod, container)
+}
+
+constant_map_ = {
+  constants._PI.value: math.pi,
+  constants._G.value: 6.67430E-11,
+  constants._g.vaule: 9.81,
+  constants._e.value: math.e
 }
 
 lexi = lexer()

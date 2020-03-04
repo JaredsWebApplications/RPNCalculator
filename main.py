@@ -39,6 +39,17 @@ def retrieve_value_(string: str):
   except KeyError:
       print("cannot retrieve value of {}, it is not in the table".format(variable_))
 
+
+def get_constant_(string: str):
+    look_up_ = -1
+    for i, element in enumerate(lex.constant_names_):
+      if(element == string): 
+        look_up_ = i
+        break
+    try:
+      stack_.push(maths.constant_map_[look_up_])
+    except KeyError:
+      print("could not find constant: {}".format(string))
 def math_operation_(string: str):
   try:
     # this is only for list operations
@@ -65,6 +76,8 @@ def rpn_calculator(expression: str) -> None:
     operand_code = lex.tokenize(chunk)
     if(operand_code == operand_codes.GARBAGE.value):
       print("got garbage with operand: {}".format(chunk))
+    elif(operand_code == operand_codes.CONSTANT.value):
+      get_constant_(chunk)
 
     elif(operand_code == operand_codes.NUMBER.value):
       stack_.push(float(chunk))
@@ -84,6 +97,6 @@ while(True):
   exp = input(">>> ")
   rpn_calculator(exp)
   if(not stack_.is_empty()):
-    try: print("\t{0:.5f}".format(stack_.peek()))
+    try: print("\t{0:.15f}".format(stack_.peek()))
     except IndexError: print("\tstack is empty")
   stack_.clear_contents()
