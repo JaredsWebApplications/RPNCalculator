@@ -96,4 +96,3 @@ class lexer():
         except KeyError:
             return operand_codes.GARBAGE.value
 
-

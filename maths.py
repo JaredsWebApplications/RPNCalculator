@@ -38,7 +38,7 @@ function_map_ = {
 constant_map_ = {
   constants._PI.value: math.pi,
   constants._G.value: 6.67430E-11,
-  constants._g.vaule: 9.81,
+  constants._g.value: 9.81,
   constants._e.value: math.e
 }
 

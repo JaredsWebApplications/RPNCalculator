@@ -91,6 +91,17 @@ def rpn_calculator(expression: str) -> None:
     else:
       math_operation_(chunk)
 
+def unit_test_():
+  expression = "10 SIN\n18 9 *"
+  for element in expression.split('\n'):
+    print(">>> {}".format(element))
+    rpn_calculator(element)
+
+    if(not stack_.is_empty()):
+      try: print("\t{0:.15f}".format(stack_.peek()))
+      except IndexError: print("\tstack is empty")
+    stack_.clear_contents()
+
 signal(SIGINT, sigint_handler)
 
 while(True):
