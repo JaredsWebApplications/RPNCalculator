@@ -87,11 +87,33 @@ Both of these can be chained together in one line like so:
 10 =variable_two
 ?variable ?variable_two * =variable_three
 ?varible_three
-PEEK
 ```
 
 Here we assign both `variable` and `variable_two` to contain 10, then we multiply the result and store that value into `variable_three`.
-We can now see the value of of `variable_three` by calling `PEEK` without altering the stack.
+
+### Scripting
+
+The above can be consolidated into a script written by the end user.
+These scripts are plain text files and no special extensions are needed.
+Comments are declared **only** by a `#` preceding the line.
+The following is an example of a quadratic formula program:
+
+```
+# this is a quadratic formula program
+# written by Jared Dyreson CSUF 2021
+1 =a
+-2 =b
+-3 =c
+# this expression calculates the inside of the square root
+?b 2 POW ?a ?c * 4 * - SQRT =square_root
+?b -1 * =b
+?b ?square_root + ?a 2 * / =solution_one
+?b ?square_root - ?a 2 * / =solution_two
+```
+
+Answer is `[-1, 3]`.
+More features include a keyword `QUIET` where assignment declarations and peeks to the stack are not printed to the console.
+Other formulas can be found in the `formulas` directory in this repository.
 
 ## Constants
 
