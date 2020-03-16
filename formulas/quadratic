@@ -1,0 +1,10 @@
+# this is a quadratic formula program
+# written by Jared Dyreson CSUF 2021
+1 =a
+-2 =b
+-3 =c
+# this expression calculates the inside of the square root
+?b 2 POW ?a ?c * 4 * - SQRT =square_root
+?b -1 * =b
+?b ?square_root + ?a 2 * / =solution_one
+?b ?square_root - ?a 2 * / =solution_two

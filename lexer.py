@@ -34,6 +34,7 @@ class operand_codes(Enum, start=0):
     POP
     PEEK
     CONSTANT
+    COMMENT
 
 
 # G = graviational constant
@@ -91,6 +92,8 @@ class lexer():
           return operand_codes.RETRIEVE.value
         if(chunk[0] == '_'):
           return operand_codes.CONSTANT.value
+        if(chunk[0] == '#'):
+          return operand_codes.COMMENT.value
         try:
             return self.operand_map[chunk]
         except KeyError:

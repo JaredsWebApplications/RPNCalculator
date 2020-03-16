@@ -36,8 +36,9 @@ def retrieve_value_(string: str):
   try:
       value_retrieved_ = variable_map_[variable_]
       stack_.push(value_retrieved_)
-  except KeyError:
+  except KeyError as error:
       print("cannot retrieve value of {}, it is not in the table".format(variable_))
+      # print("full error log: {}")
 
 
 def get_constant_(string: str):
@@ -88,6 +89,10 @@ def rpn_calculator(expression: str) -> None:
     elif(operand_code == operand_codes.RETRIEVE.value):
       retrieve_value_(chunk)
 
+    elif(operand_code == operand_codes.COMMENT.value):
+        return operand_codes.COMMENT.value
+        break
+
     else:
       math_operation_(chunk)
 
@@ -102,12 +107,29 @@ def unit_test_():
       except IndexError: print("\tstack is empty")
     stack_.clear_contents()
 
-signal(SIGINT, sigint_handler)
+def read_from_file(path: str) -> None:
+    with open(path) as fd: content = fd.readlines()
+    for line in content:
+      line = line.replace('\n', '')
+      code_ = rpn_calculator(line)
+      if(not stack_.is_empty() and code_ != operand_codes.COMMENT.value):
+        print(">>> {}".format(line))
+        try: print("\t{0:.15f}".format(stack_.peek()))
+        except IndexError: print("stack is empty")
+    # print(variable_map_)
+    stack_.clear_contents()
 
-while(True):
-  exp = input(">>> ")
-  rpn_calculator(exp)
-  if(not stack_.is_empty()):
-    try: print("\t{0:.15f}".format(stack_.peek()))
-    except IndexError: print("\tstack is empty")
-  stack_.clear_contents()
+read_from_file("./formulas/quadratic")
+# print("="*80)
+# read_from_file("./formulas/pythagorean")
+# print("="*80)
+# read_from_file("./formulas/some_trig")
+# signal(SIGINT, sigint_handler)
+
+# while(True):
+  # exp = input(">>> ")
+  # rpn_calculator(exp)
+  # if(not stack_.is_empty()):
+    # try: print("\t{0:.15f}".format(stack_.peek()))
+    # except IndexError: print("\tstack is empty")
+  # stack_.clear_contents()

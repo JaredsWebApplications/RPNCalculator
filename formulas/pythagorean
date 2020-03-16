@@ -1,0 +1,7 @@
+# this program computes the value of c in a^2 + b^2 = c^2
+# written by Jared Dyreson 
+3 =a
+4 =b
+?a 2 POW =a
+?b 2 POW =b
+?a ?b + SQRT =c

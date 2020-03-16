@@ -1,0 +1,4 @@
+# some trig stuff
+2 15 * SIN 8 * 5 + =x
+45 TAN 2 + =y
+?x ?y /
