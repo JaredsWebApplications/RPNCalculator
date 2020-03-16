@@ -1,0 +1,14 @@
+# this is a midpoint formula program
+# written by Jared Dyreson
+# this might lead into tuple declaration to make life easier
+
+0 =x_1
+0 =y_1
+0 =x_2
+5 =y_2
+
+?x_1 ?x_2 + 2 / =x_m
+?y_1 ?y_2 + 2 / y_m
+
+# (0, 0) =naught
+# (0, 5) =delta

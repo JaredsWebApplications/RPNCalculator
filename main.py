@@ -111,25 +111,26 @@ def read_from_file(path: str) -> None:
     with open(path) as fd: content = fd.readlines()
     for line in content:
       line = line.replace('\n', '')
+      if(not line): pass
       code_ = rpn_calculator(line)
-      if(not stack_.is_empty() and code_ != operand_codes.COMMENT.value):
+      if(not stack_.is_empty() and code_ != operand_codes.COMMENT.value and len(line) != 0):
         print(">>> {}".format(line))
         try: print("\t{0:.15f}".format(stack_.peek()))
         except IndexError: print("stack is empty")
     # print(variable_map_)
     stack_.clear_contents()
 
-read_from_file("./formulas/quadratic")
+# read_from_file("./formulas/quadratic")
 # print("="*80)
 # read_from_file("./formulas/pythagorean")
 # print("="*80)
 # read_from_file("./formulas/some_trig")
 # signal(SIGINT, sigint_handler)
 
-# while(True):
-  # exp = input(">>> ")
-  # rpn_calculator(exp)
-  # if(not stack_.is_empty()):
-    # try: print("\t{0:.15f}".format(stack_.peek()))
-    # except IndexError: print("\tstack is empty")
-  # stack_.clear_contents()
+while(True):
+  exp = input(">>> ")
+  rpn_calculator(exp)
+  if(not stack_.is_empty()):
+    try: print("\t{0:.15f}".format(stack_.peek()))
+    except IndexError: print("\tstack is empty")
+  stack_.clear_contents()
