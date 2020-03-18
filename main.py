@@ -73,27 +73,32 @@ def math_operation_(string: str):
 
 
 def rpn_calculator(expression: str) -> None:
-  for token in expression.split():
-    operand_code = lex.tokenize(token)
-    if(operand_code == operand_codes.GARBAGE.value):
-      print("got garbage with operand: {}".format(token))
-    elif(operand_code == operand_codes.CONSTANT.value):
-      get_constant_(token)
+  for index, token in enumerate(expression.split()):
+    try:
+      operand_code = lex.tokenize(token)
+      if(operand_code == operand_codes.GARBAGE.value):
+        print("got garbage with operand: {}".format(token))
+      elif(operand_code == operand_codes.CONSTANT.value):
+        get_constant_(token)
 
-    elif(operand_code == operand_codes.NUMBER.value):
-      stack_.push(float(token))
+      elif(operand_code == operand_codes.NUMBER.value):
+        stack_.push(float(token))
 
-    elif(operand_code == operand_codes.ASSIGN.value):
-      assign_value_(token)
+      elif(operand_code == operand_codes.ASSIGN.value):
+        assign_value_(token)
 
-    elif(operand_code == operand_codes.RETRIEVE.value):
-      retrieve_value_(token)
+      elif(operand_code == operand_codes.RETRIEVE.value):
+        retrieve_value_(token)
 
-    elif(operand_code == operand_codes.COMMENT.value):
-        return operand_codes.COMMENT.value
+      elif(operand_code == operand_codes.COMMENT.value):
+          return operand_codes.COMMENT.value
 
-    else:
-      math_operation_(token)
+      else:
+        math_operation_(token)
+    except Exception as error:
+      print("Malformed expression: \"{}\" at token \'{}\' (index: {})".format(expression, token, index))
+      stack_.clear_contents()
+      break
 
 def unit_test_():
   expression = "10 SIN\n18 9 *"

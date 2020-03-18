@@ -53,7 +53,11 @@ def math_function(container: list, operand_code: int) -> float:
       if(len(container) == 1):
         return function_map_[operand_code](*container)
       elif(len(container) == 2 or operand_code == operand_codes.POW.value and operand_code in simple_operands_):
-        return function_map_[operand_code](container[1], container[0])
+        try:
+          return function_map_[operand_code](container[1], container[0])
+        except Exception as error:
+          print("got a math error ey there bud!: {}".format(error))
+          return 0
       else:
         return function_map_[operand_code](container)
     except KeyError:
