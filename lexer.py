@@ -63,7 +63,7 @@ class lexer():
 
     def is_keyword(self, pattern: str) -> bool:
         """
-        Check if given chunk given is a keyword.
+        Check if given token given is a keyword.
         If it is, then we cannot use it for variable assignment.
         """
         return pattern in self.keywords
@@ -76,26 +76,26 @@ class lexer():
         except ValueError: float_check_ = False
         return (integer_check_ or float_check_)
 
-    def tokenize(self, chunk: str) -> int:
+    def tokenize(self, token: str) -> int:
         """
         Iterate over the token names.
         If there is a match, return it's operand code.
         If there is not a match, return a garbage value.
         """
-        if(chunk in self.operands_names_):
-          return getattr(operand_codes, chunk).value
-        if(self.is_number(chunk)):
+        if(token in self.operands_names_):
+          return getattr(operand_codes, token).value
+        if(self.is_number(token)):
           return operand_codes.NUMBER.value
-        if(chunk[0] == '='):
+        if(token[0] == '='):
           return operand_codes.ASSIGN.value
-        if(chunk[0] == '?'):
+        if(token[0] == '?'):
           return operand_codes.RETRIEVE.value
-        if(chunk[0] == '_'):
+        if(token[0] == '_'):
           return operand_codes.CONSTANT.value
-        if(chunk[0] == '#'):
+        if(token[0] == '#'):
           return operand_codes.COMMENT.value
         try:
-            return self.operand_map[chunk]
+            return self.operand_map[token]
         except KeyError:
             return operand_codes.GARBAGE.value
 

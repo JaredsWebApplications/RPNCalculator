@@ -73,28 +73,27 @@ def math_operation_(string: str):
 
 
 def rpn_calculator(expression: str) -> None:
-  for chunk in expression.split():
-    operand_code = lex.tokenize(chunk)
+  for token in expression.split():
+    operand_code = lex.tokenize(token)
     if(operand_code == operand_codes.GARBAGE.value):
-      print("got garbage with operand: {}".format(chunk))
+      print("got garbage with operand: {}".format(token))
     elif(operand_code == operand_codes.CONSTANT.value):
-      get_constant_(chunk)
+      get_constant_(token)
 
     elif(operand_code == operand_codes.NUMBER.value):
-      stack_.push(float(chunk))
+      stack_.push(float(token))
 
     elif(operand_code == operand_codes.ASSIGN.value):
-      assign_value_(chunk)
+      assign_value_(token)
 
     elif(operand_code == operand_codes.RETRIEVE.value):
-      retrieve_value_(chunk)
+      retrieve_value_(token)
 
     elif(operand_code == operand_codes.COMMENT.value):
         return operand_codes.COMMENT.value
-        break
 
     else:
-      math_operation_(chunk)
+      math_operation_(token)
 
 def unit_test_():
   expression = "10 SIN\n18 9 *"
@@ -117,7 +116,6 @@ def read_from_file(path: str) -> None:
         print(">>> {}".format(line))
         try: print("\t{0:.15f}".format(stack_.peek()))
         except IndexError: print("stack is empty")
-    # print(variable_map_)
     stack_.clear_contents()
 
 # read_from_file("./formulas/quadratic")
@@ -125,7 +123,7 @@ def read_from_file(path: str) -> None:
 # read_from_file("./formulas/pythagorean")
 # print("="*80)
 # read_from_file("./formulas/some_trig")
-# signal(SIGINT, sigint_handler)
+signal(SIGINT, sigint_handler)
 
 while(True):
   exp = input(">>> ")
