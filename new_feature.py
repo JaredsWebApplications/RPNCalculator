@@ -2,6 +2,7 @@
 
 import re
 curly_brace_re_ = r"\{(.*?)\}"
+import main
 
 # regular range notation
 s = "1-10"
@@ -40,8 +41,38 @@ def test_():
   if(range_(st) == test_list_): print("passed bash expansion notation test")
   if(percent('5%') == 0.05): print("passed percent notation test")
 
-test_()
+# test_()
 
+def convert_regular_notation(expression: str):
+    operands = ['*', '%', '/', '+', '-']
+    # s = "x ^ 2"
+    rev = expression[::-1].split()
+    ops = []
+    for index, element in enumerate(rev):
+      # if the element is an operand
+      if(element in operands): 
+        ops.append(element)
+        rev.pop(index)
+      # if element is a letter, then it has to be a variable
+      elif(element == '^'):
+        # x ^ 2
+        rev[index], rev[index-1] = rev[index-1], rev[index]
+        # ^ 2 x
+        rev[index-1] = "POW"
+        # ?x 2 POW
+        if(rev[index+1].isalpha()):
+          rev[index+1] = "?{}".format(rev[index+1])
+    return ' '.join((rev[::-1] + ops))
+
+def test_convert_regular_notation():
+    expression = "1 + 2 / 3"
+    converted_expression = convert_regular_notation(expression)
+    main.rpn_calculator(converted_expression)
+    if(main.stack_.peek() == eval(expression)):
+      print("assert passed....")
+
+# convert_regular_notation()
+test_convert_regular_notation()
 # examples with percent
 # ---- 1 ----------
 # 5% =a

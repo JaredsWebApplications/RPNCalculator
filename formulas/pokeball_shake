@@ -1,0 +1,10 @@
+# check the probability that a pokemon will be caught
+# this is a level 5 pikachu at 3/4 health with a pokeball
+
+20 =max_health_points
+15 =current_health_points
+190 =catch_rate
+1 =bonus_ball
+1 =bonus_status
+
+#?max_health_points 3 * 2 ?current_health_points - ?catch_rate ?bonus_ball * ?bonus_status * 3 ?max_health_points * /

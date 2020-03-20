@@ -123,17 +123,17 @@ def read_from_file(path: str) -> None:
         except IndexError: print("stack is empty")
     stack_.clear_contents()
 
-# read_from_file("./formulas/quadratic")
+# read_from_file("./formulas/pokeball_shake")
 # print("="*80)
 # read_from_file("./formulas/pythagorean")
 # print("="*80)
 # read_from_file("./formulas/some_trig")
-signal(SIGINT, sigint_handler)
+# signal(SIGINT, sigint_handler)
 
-while(True):
-  exp = input(">>> ")
-  rpn_calculator(exp)
-  if(not stack_.is_empty()):
-    try: print("\t{0:.15f}".format(stack_.peek()))
-    except IndexError: print("\tstack is empty")
-  stack_.clear_contents()
+# while(True):
+  # exp = input(">>> ")
+  # rpn_calculator(exp)
+  # if(not stack_.is_empty()):
+    # try: print("\t{0:.15f}".format(stack_.peek()))
+    # except IndexError: print("\tstack is empty")
+  # stack_.clear_contents()
