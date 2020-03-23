@@ -18,6 +18,10 @@ TODO
     - this can be found in lexer.py in this repository for an example of this
 
 """
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+
 class PortfolioItem():
     def __init__(self, title: str, content: str, number: int, 
                     image_path: str, demo_link: str, doc_link: str, src_link : str):
@@ -28,3 +32,12 @@ class PortfolioItem():
         self.demo_link = demo_link
         self.doc_link = doc_link
         self.src_link = src_link
+
+class RPNExpressionIngestor(FlaskForm):
+
+  expression_ = StringField(
+    'Expression',
+    validators=[DataRequired()]
+  )
+
+  submit = SubmitField('Compute')
