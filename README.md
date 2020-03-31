@@ -118,3 +118,28 @@ Other formulas can be found in the `formulas` directory in this repository.
 ## Constants
 
 The only constant currently supported is pi which can be called by `PI` and will be pushed to the stack
+
+# Running the Flask Application
+
+First make sure you have this environment variable set correctly to the main python file that runs your web application:
+
+```bash
+export FLASK_APP="application"
+```
+
+Put this in your shell's configuration file if you want it to persist:
+
+`~/.bashrc`, `~/.zshrc`, etc.
+
+
+If you want to run the application solely on `localhost`, you can run it with the following command:
+
+```bash
+flask run
+```
+
+However, if you want to broadcast the application to all devices connected to the network, you can run the following command:
+
+```bash
+flask run --host=0.0.0.0
+```
