@@ -41,3 +41,9 @@ class RPNExpressionIngestor(FlaskForm):
   )
 
   submit = SubmitField('Compute')
+
+class RPNCalculatorInterface(FlaskForm):
+    def __init__(self, form: FlaskForm, buttons: list, name: str):
+        self.buttons = buttons
+        self.name = name
+        self.signed = False

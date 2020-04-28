@@ -2,6 +2,19 @@ import markdown
 import markdown.extensions.fenced_code
 from pygments.formatters import HtmlFormatter
 
+"""
+This class will take in Markdown and correctly render it into HTML.
+Output generated can be then piped into Jinja2 style syntax with the following line:
+
+{{ GeneratedOutput|safe }}
+
+Please refer to this Stackoverflow post for more details:
+
+https://stackoverflow.com/questions/3206344/passing-html-to-template-using-flask-jinja2
+
+Written by Jared Dyreson CSUF 2021
+"""
+
 class MarkdownIngestor():
     def __init__(self, path: str):
         self.path = path

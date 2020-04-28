@@ -2,7 +2,7 @@
 
 import re
 curly_brace_re_ = r"\{(.*?)\}"
-import main
+# from bauer import main
 
 # regular range notation
 s = "1-10"
@@ -62,14 +62,22 @@ def convert_regular_notation(expression: str):
         # ?x 2 POW
         if(rev[index+1].isalpha()):
           rev[index+1] = "?{}".format(rev[index+1])
+      elif("(" in element):
+        rev.pop(index)
+        t = element.replace("(", "").replace(")", "")
+        if("-" in t):
+            t = "{}{}".format(t[1:], t[:1])
+        rev.insert(index, t)
     return ' '.join((rev[::-1] + ops))
 
 def test_convert_regular_notation():
     expression = "1 + 2 / 3"
+    expression = "5 + 5 * (-3)"
     converted_expression = convert_regular_notation(expression)
-    main.rpn_calculator(converted_expression)
-    if(main.stack_.peek() == eval(expression)):
-      print("assert passed....")
+    print(converted_expression)
+    # main.rpn_calculator(converted_expression)
+    # if(main.stack_.peek() == eval(expression)):
+      # print("assert passed....")
 
 # convert_regular_notation()
 test_convert_regular_notation()

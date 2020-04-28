@@ -1,11 +1,13 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, session, send_file, send_from_directory
+from flask import Flask, render_template, url_for, flash, redirect, request, session, send_file, send_from_directory, jsonify
 from bauer import app
 # this is an example of how the models can be put on the front end
 from bauer.forms import RPNExpressionIngestor
 from bauer.models import PortfolioItem
+from bauer.models import RPNCalculatorInterface
 from bauer.markdown_renderer import MarkdownIngestor
 from backend import main
 import os
+import json
 
 @app.route("/", methods=['GET', 'POST'])
 def calculator():
@@ -26,10 +28,19 @@ def calculator():
           except IndexError: print("\tstack is empty")
         main.stack_.clear_contents()
         return redirect(url_for('calculator'))
-    return render_template('calculator.html', form=RPNExpressionIngestor(request.form), title="Bauer")
+    return render_template('calculator.html', ingestor=RPNExpressionIngestor(request.form), title="Bauer")
 
 @app.route("/about")
 def about():
     content = MarkdownIngestor("bauer/ABOUT_README.md").formatted_contents
     return render_template('about.html', AboutPageContent=content)
 
+@app.route("/rpn", methods=['GET', 'POST'])
+def rpn():
+    print(request.form)
+    return render_template('rpncalculator.html')
+
+@app.route('/api/', methods=['POST'])
+def api():
+    print("hello from flask!\n")
+    return '', 200
