@@ -37,10 +37,18 @@ def about():
 
 @app.route("/rpn", methods=['GET', 'POST'])
 def rpn():
-    print(request.form)
-    return render_template('rpncalculator.html')
+    return render_template('rpncalculator.html', evaluation="6.000000", expression="1 2 + 3")
 
-@app.route('/api/', methods=['POST'])
+@app.route('/api/', methods=['GET','POST'])
 def api():
-    print("hello from flask!\n")
-    return '', 200
+    if(request.method == "POST"):
+      # are we recieving data from Javascript
+      expression = request.form['expression']
+      main.rpn_calculator(expression)
+      return redirect(url_for('rpn'))
+    elif(request.method == "GET"):
+        # we are pushing to Javascriptmain.stack_.peek()))
+        payload = {"evaluation": main.stack_.peek()}
+        main.stack_.clear_contents()
+        return json.dumps(payload)
+    return redirect(url_for('rpn'))
