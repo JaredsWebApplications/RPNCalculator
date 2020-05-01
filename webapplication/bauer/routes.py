@@ -37,7 +37,7 @@ def about():
 
 @app.route("/rpn", methods=['GET', 'POST'])
 def rpn():
-    return render_template('rpncalculator.html', evaluation="6.000000", expression="1 2 + 3")
+    return render_template('rpncalculator.html', evaluation="", expression="")
 
 @app.route('/api/', methods=['GET','POST'])
 def api():
@@ -56,4 +56,4 @@ def api():
         payload = {"evaluation": main.stack_.peek()}
         # main.stack_.clear_contents()
         return json.dumps(payload)
-    return render_template('rpncalculator.html')
+    return redirect(url_for('rpn'))

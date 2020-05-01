@@ -9,8 +9,8 @@
     <body>
         <div class="main">
             <form name="form" id="form" method="POST">
-                <input class="field" name="field2" value="">
-                <input class="field" name="field1" value="">
+                <input class="field" name="field2" value="{{ expression }}">
+                <input class="field" name="field1" value="{{ evaluation }}">
             </form>
             <table>
                 <tr>
@@ -61,7 +61,6 @@
           // Get some values from elements on the page:
           var $form = $( this ),
             term = document.form.field1.value;
-            <!--term = $form.find( "input[name='field2']" ).val(),-->
             url = "http://localhost:5000/api/";
          
           // Send the data using post
