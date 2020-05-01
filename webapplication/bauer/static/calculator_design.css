@@ -7,25 +7,28 @@ body {
     background:royalblue;
 }
 
+.field {
+    display: flex;
+    width: 323px;
+    height: 40px;
+    font-size: 1.3em;
+    text-align: right;
+    margin: 2px;
+}
+
 .button {
     align-content: center;
-    width: 55px;
-    height: 55px;
+    width: 60px;
+    height: 60px;
     font-size: 1em;
     font-weight: 700;
     margin: 2px;
     cursor: pointer;
-    background: darkorange;
+    background: #ff7b00;
     border: none;
     color: black;
 }
 
-.textview {
-    width: 305px;
-    height: 40px;
-    font-size: 1.3em;
-    text-align: right;
-}
 
 .main {
     position: absolute;

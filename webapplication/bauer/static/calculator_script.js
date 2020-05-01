@@ -1,44 +1,35 @@
-const API_URL= '/api'
-
 function insert(ch) {
-    s = document.form.field.value
+    s = document.form.field1.value
     if (s.length > 0) {
-        document.form.field.value = s + " " + ch
+        document.form.field1.value = s + " " + ch
     }
     else {
-        document.form.field.value = ch
+        document.form.field1.value = ch
     }
 }
-function enter(){
-  //var message = $("#stringexpression").val();
-  //console.log(message);
-  alert("before post request")
-  $.post({
-    url: "https://localhost:5000/api/",
-    data: JSON.stringify({"message": "Hello"}),
-  });
-  //$.ajax({
-      //url: "https://localhost:5000/api/",
-      //type: "POST",
-      //contentType: "application/json",
-      //data: JSON.stringify({"message": "Hello"}),
-      //dataType: "json"
-  //}).done(function(data) {
-      //console.log(data);
-  //});
-  alert("post sent")
+
+
+function enter() {
+    var exp = document.form.field1.value;
+    document.form.field2.value = exp;
+    document.form.field1.value = 3;
 }
+
 function allClear() {
-    document.form.field.value = ""
+    document.form.field2.value = document.form.field1.value = ""
     }
 
 function del() {
-    var s = document.form.field.value
-    n = s.length
+    var s = document.form.field1.value
+    var n = s.length
     if (n > 1) {
-        document.form.field.value = s.slice(0, n-2);    
+        while (s[n-1] != " ") {
+            n--;
+        }
+        document.form.field1.value = s.slice(0, n-1);    
     }
     else {
         allClear();
     }
 }
+

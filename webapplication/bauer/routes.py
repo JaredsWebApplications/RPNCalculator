@@ -41,14 +41,19 @@ def rpn():
 
 @app.route('/api/', methods=['GET','POST'])
 def api():
+    payload = {}
     if(request.method == "POST"):
+      print("got the post!")
       # are we recieving data from Javascript
       expression = request.form['expression']
       main.rpn_calculator(expression)
-      return redirect(url_for('rpn'))
+      main.stack_.peek()
+      payload["expression"] = expression
+      return json.dumps(payload)
     elif(request.method == "GET"):
         # we are pushing to Javascriptmain.stack_.peek()))
+        payload.clear()
         payload = {"evaluation": main.stack_.peek()}
-        main.stack_.clear_contents()
+        # main.stack_.clear_contents()
         return json.dumps(payload)
-    return redirect(url_for('rpn'))
+    return render_template('rpncalculator.html')
