@@ -1,5 +1,15 @@
 # Bauer: Reverse Polish Notation Calculator
 
+## NOTE
+
+This is an archived version of this project and can be heavily improved.
+The following things need to be changed:
+- Using an actual lexer, parser and AST
+- Restructured folder hierarchy
+
+This has been dockerized in it's current state as of 01/21/22.
+
+
 Example of RPN:
 
 ```
