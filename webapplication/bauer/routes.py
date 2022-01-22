@@ -1,26 +1,16 @@
 from flask import (
-    Flask,
     render_template,
     url_for,
-    flash,
     redirect,
     request,
-    session,
-    send_file,
-    send_from_directory,
-    jsonify,
 )
-from bauer import app
+from webapplication.bauer import app
 
 # this is an example of how the models can be put on the front end
-from bauer.forms import RPNExpressionIngestor
-from bauer.models import PortfolioItem
-from bauer.models import RPNCalculatorInterface
-from bauer.markdown_renderer import MarkdownIngestor
-from backend import main
-import os
+from webapplication.bauer.forms import RPNExpressionIngestor
+from webapplication.bauer.markdown_renderer import MarkdownIngestor
+from webapplication.backend import main
 import json
-
 
 @app.route("/", methods=["GET", "POST"])
 def calculator():
@@ -31,6 +21,7 @@ def calculator():
     The rest is just front end components.
     Results are currently printed to the console, please take this ouput and try to put it somewhere other than the console.
     """
+
     calculator_ = RPNExpressionIngestor(request.form)
     if calculator_.validate_on_submit():
         expr_ = calculator_.expression_.data

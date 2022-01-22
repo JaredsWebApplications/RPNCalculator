@@ -1,8 +1,8 @@
 #!/usr/bin/env python3.8
 
-from backend.lexer import operand_codes, lexer, constants
+from webapplication.backend.lexer import operand_codes, lexer, constants
 import math
-from backend.stack import stack
+from webapplication.backend.stack import stack
 import functools
 import operator
 import re
